@@ -34,6 +34,7 @@ type Repository struct {
 	Owner       string
 	Host        string
 	SSHHost     string
+	Username    string
 	Token       string
 	AuthorName  string
 	AuthorEmail string
@@ -42,7 +43,7 @@ type Repository struct {
 }
 
 // NewRepository returns a git repository wrapper
-func NewRepository(name, owner, host, token, authorName, authorEmail string) (*Repository, error) {
+func NewRepository(name, owner, host, username, token, authorName, authorEmail string) (*Repository, error) {
 	if name == "" {
 		return nil, fmt.Errorf("name required")
 	}
@@ -66,6 +67,7 @@ func NewRepository(name, owner, host, token, authorName, authorEmail string) (*R
 		Name:        name,
 		Owner:       owner,
 		Host:        host,
+		Username:    username,
 		Token:       token,
 		AuthorName:  authorName,
 		AuthorEmail: authorEmail,
@@ -88,7 +90,7 @@ func (r *Repository) GetSSH() string {
 
 func (r *Repository) auth() transport.AuthMethod {
 	return &http.BasicAuth{
-		Username: "git",
+		Username: r.Username,
 		Password: r.Token,
 	}
 }
