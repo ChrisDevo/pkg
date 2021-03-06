@@ -1,4 +1,4 @@
-module github.com/fluxcd/pkg/git
+module github.com/ChrisDevo/pkg/git
 
 go 1.15
 
